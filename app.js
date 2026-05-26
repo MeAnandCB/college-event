@@ -18,124 +18,616 @@ const GOOGLE_ENTRY_PHONE = "entry.49910056";     // Phone Number field
 // 1. QUESTION DATABASE
 const QUIZ_QUESTIONS = [
     {
-        category: "BASIC IT",
-        question: "Which of the following acts as the 'brain' of a computer system, executing instructions and processing data?",
+        category: "Computer Basics",
+        question: "What does CPU stand for?",
         options: [
-            "Hard Disk Drive (HDD)",
-            "Central Processing Unit (CPU)",
-            "Random Access Memory (RAM)",
-            "Graphics Processing Unit (GPU)"
+            "Central Process Unit",
+            "Central Processing Unit",
+            "Computer Personal Unit",
+            "Central Processor Utility"
         ],
         answer: 1,
-        explanation: "The CPU (Central Processing Unit) is often called the brain of the computer because it interprets and runs instructions from programs."
+        explanation: "CPU stands for Central Processing Unit."
     },
     {
-        category: "CODING BASICS",
-        question: "In programming, what is the primary purpose of a variable?",
+        category: "Operating Systems",
+        question: "Which of the following is an operating system?",
         options: [
-            "To permanently delete software files",
-            "To store data values that can be used and changed later",
-            "To connect the computer to the internet",
-            "To speed up the monitor's display rate"
+            "Python",
+            "Linux",
+            "HTML",
+            "MySQL"
         ],
         answer: 1,
-        explanation: "A variable is a named storage location in programming that holds data values (like numbers or text) for a program to use."
+        explanation: "Linux is an operating system."
     },
     {
-        category: "HTML & WEB",
-        question: "What does the abbreviation 'HTML' stand for in web development?",
+        category: "Computer Memory",
+        question: "What is the full form of RAM?",
         options: [
-            "HighText Machine Language",
-            "HyperText Markup Language",
-            "Home Tool Markup Language",
-            "Hyperlink Text Management List"
-        ],
-        answer: 1,
-        explanation: "HTML (HyperText Markup Language) is the standard markup language used to create the structure of web pages."
-    },
-    {
-        category: "BASIC IT",
-        question: "Which of the following is temporary (volatile) storage that holds data currently being used by the computer?",
-        options: [
-            "Solid State Drive (SSD)",
-            "Read-Only Memory (ROM)",
-            "Random Access Memory (RAM)",
-            "USB Flash Drive"
-        ],
-        answer: 2,
-        explanation: "RAM (Random Access Memory) is fast, temporary memory that keeps active applications and data open, but it gets cleared when the computer is turned off."
-    },
-    {
-        category: "CODING BASICS",
-        question: "What type of loop will run a specific block of code a predetermined number of times?",
-        options: [
-            "For Loop",
-            "Infinite Loop",
-            "Wait Loop",
-            "Void Loop"
+            "Random Access Memory",
+            "Read Access Memory",
+            "Run Access Memory",
+            "Random Actual Memory"
         ],
         answer: 0,
-        explanation: "A 'for loop' is commonly used when you know in advance how many times you want to repeat a block of code."
+        explanation: "RAM stands for Random Access Memory."
     },
     {
-        category: "BASIC IT",
-        question: "Which keyboard shortcut is standard for copying selected text or items in most operating systems?",
+        category: "Web Development",
+        question: "Which language is mainly used for web page structure?",
         options: [
-            "Ctrl + V (or Cmd + V)",
-            "Ctrl + X (or Cmd + X)",
-            "Ctrl + C (or Cmd + C)",
-            "Ctrl + Z (or Cmd + Z)"
+            "CSS",
+            "Python",
+            "HTML",
+            "Java"
         ],
         answer: 2,
-        explanation: "Ctrl + C (Windows) or Cmd + C (macOS) is the standard shortcut to copy items to the clipboard."
+        explanation: "HTML creates the structure of web pages."
     },
     {
-        category: "CODING BASICS",
-        question: "In programming, which data type is used to represent text values rather than numbers?",
+        category: "Networking",
+        question: "Which protocol is secure?",
         options: [
-            "Integer",
-            "Boolean",
-            "Float",
-            "String"
+            "HTTP",
+            "FTP",
+            "HTTPS",
+            "SMTP"
+        ],
+        answer: 2,
+        explanation: "HTTPS is the secure version of HTTP."
+    },
+    {
+        category: "Programming",
+        question: "Which company developed Python?",
+        options: [
+            "Microsoft",
+            "Apple",
+            "Google",
+            "Guido van Rossum"
         ],
         answer: 3,
-        explanation: "A 'String' data type is a sequence of characters (letters, numbers, or symbols) representing text, typically enclosed in quotation marks."
+        explanation: "Python was created by Guido van Rossum."
     },
     {
-        category: "NETWORKING",
-        question: "What does 'IP' stand for in the context of an IP Address?",
+        category: "Networking",
+        question: "Which device is used to connect networks?",
         options: [
-            "Internet Protocol",
-            "Information Provider",
-            "Internal Program",
-            "Instant Port"
-        ],
-        answer: 0,
-        explanation: "An IP (Internet Protocol) address is a unique numerical label assigned to each device connected to a computer network."
-    },
-    {
-        category: "CODING BASICS",
-        question: "What is a 'bug' in computer programming?",
-        options: [
-            "A physical insect inside the laptop keyboard",
-            "An error or defect in a program that causes it to behave unexpectedly",
-            "A specialized security tool used to encrypt files",
-            "An internet browser extension that blocks advertisements"
+            "Monitor",
+            "Router",
+            "Keyboard",
+            "Printer"
         ],
         answer: 1,
-        explanation: "A bug is an error, flaw, or fault in design or code that causes a program to produce an incorrect or unexpected result."
+        explanation: "A router connects multiple networks."
     },
     {
-        category: "BASIC IT",
-        question: "Which of the following is considered system software rather than application software?",
+        category: "Artificial Intelligence",
+        question: "What does AI stand for?",
         options: [
-            "Microsoft Word",
-            "Google Chrome",
-            "Windows Operating System",
-            "Adobe Photoshop"
+            "Automated Internet",
+            "Artificial Intelligence",
+            "Advanced Interface",
+            "Artificial Internet"
+        ],
+        answer: 1,
+        explanation: "AI stands for Artificial Intelligence."
+    },
+    {
+        category: "Database",
+        question: "Which of the following is a database language?",
+        options: [
+            "SQL",
+            "HTML",
+            "CSS",
+            "XML"
+        ],
+        answer: 0,
+        explanation: "SQL is used for database management."
+    },
+    {
+        category: "Computer Memory",
+        question: "Which memory is temporary?",
+        options: [
+            "ROM",
+            "Hard Disk",
+            "RAM",
+            "DVD"
         ],
         answer: 2,
-        explanation: "An Operating System (like Windows, macOS, or Linux) is system software that controls the basic operations of the computer and runs applications."
+        explanation: "RAM stores temporary data."
+    },
+    {
+        category: "Hardware",
+        question: "Which of the following is an input device?",
+        options: [
+            "Printer",
+            "Speaker",
+            "Keyboard",
+            "Monitor"
+        ],
+        answer: 2,
+        explanation: "Keyboard is an input device."
+    },
+    {
+        category: "Computer Basics",
+        question: "What is the brain of the computer?",
+        options: [
+            "RAM",
+            "CPU",
+            "Hard Disk",
+            "GPU"
+        ],
+        answer: 1,
+        explanation: "CPU is considered the brain of the computer."
+    },
+    {
+        category: "Python",
+        question: "Which symbol is used for comments in Python?",
+        options: [
+            "//",
+            "<!-- -->",
+            "#",
+            "%%"
+        ],
+        answer: 2,
+        explanation: "Python uses # for comments."
+    },
+    {
+        category: "Web Development",
+        question: "Which technology is used for styling web pages?",
+        options: [
+            "HTML",
+            "CSS",
+            "SQL",
+            "Python"
+        ],
+        answer: 1,
+        explanation: "CSS styles web pages."
+    },
+    {
+        category: "Programming",
+        question: "Which of the following is a programming language?",
+        options: [
+            "Windows",
+            "Linux",
+            "Python",
+            "Google"
+        ],
+        answer: 2,
+        explanation: "Python is a programming language."
+    },
+    {
+        category: "Cybersecurity",
+        question: "What is phishing?",
+        options: [
+            "Fishing game",
+            "Cyber attack to steal information",
+            "Database management",
+            "Programming method"
+        ],
+        answer: 1,
+        explanation: "Phishing is a cyber attack to steal information."
+    },
+    {
+        category: "Cloud Computing",
+        question: "Which one is a cloud platform?",
+        options: [
+            "AWS",
+            "MS Word",
+            "VLC",
+            "Notepad"
+        ],
+        answer: 0,
+        explanation: "AWS is a cloud platform."
+    },
+    {
+        category: "Internet",
+        question: "What does URL stand for?",
+        options: [
+            "Uniform Resource Locator",
+            "Universal Resource Link",
+            "Uniform Read Locator",
+            "Universal Read Link"
+        ],
+        answer: 0,
+        explanation: "URL stands for Uniform Resource Locator."
+    },
+    {
+        category: "Open Source",
+        question: "Which of the following is open-source?",
+        options: [
+            "Windows",
+            "Linux",
+            "MS Office",
+            "Photoshop"
+        ],
+        answer: 1,
+        explanation: "Linux is open-source software."
+    },
+    {
+        category: "Data Science",
+        question: "Which field deals with analyzing large amounts of data?",
+        options: [
+            "Cybersecurity",
+            "Networking",
+            "Data Science",
+            "Web Design"
+        ],
+        answer: 2,
+        explanation: "Data Science analyzes large datasets."
+    },
+    {
+        category: "Python Libraries",
+        question: "Which library is mainly used for data analysis in Python?",
+        options: [
+            "NumPy",
+            "Pandas",
+            "Matplotlib",
+            "TensorFlow"
+        ],
+        answer: 1,
+        explanation: "Pandas is mainly used for data analysis."
+    },
+    {
+        category: "Data Visualization",
+        question: "Which of the following is used for data visualization?",
+        options: [
+            "Pandas",
+            "NumPy",
+            "Matplotlib",
+            "Flask"
+        ],
+        answer: 2,
+        explanation: "Matplotlib is used for visualization."
+    },
+    {
+        category: "Machine Learning",
+        question: "What is the primary purpose of train-test split?",
+        options: [
+            "To clean data",
+            "To increase dataset size",
+            "To evaluate model performance",
+            "To visualize data"
+        ],
+        answer: 2,
+        explanation: "Train-test split evaluates model performance."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which algorithm is used for classification problems?",
+        options: [
+            "Linear Regression",
+            "Logistic Regression",
+            "K-Means",
+            "PCA"
+        ],
+        answer: 1,
+        explanation: "Logistic Regression is used for classification."
+    },
+    {
+        category: "Data Science",
+        question: "What does NaN represent in a dataset?",
+        options: [
+            "Negative value",
+            "No assigned number",
+            "Missing value",
+            "Null array number"
+        ],
+        answer: 2,
+        explanation: "NaN represents missing values."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which metric is commonly used for classification evaluation?",
+        options: [
+            "Mean Squared Error",
+            "Accuracy",
+            "RMSE",
+            "R-Squared"
+        ],
+        answer: 1,
+        explanation: "Accuracy is used for classification evaluation."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which library is widely used for machine learning?",
+        options: [
+            "OpenCV",
+            "Scikit-learn",
+            "BeautifulSoup",
+            "Flask"
+        ],
+        answer: 1,
+        explanation: "Scikit-learn is widely used for ML."
+    },
+    {
+        category: "Machine Learning",
+        question: "What is overfitting in Machine Learning?",
+        options: [
+            "Model performs well on training and test data",
+            "Model performs poorly on both datasets",
+            "Model memorizes training data and performs poorly on new data",
+            "Model ignores training data"
+        ],
+        answer: 2,
+        explanation: "Overfitting occurs when a model memorizes training data."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which technique is used to reduce dimensionality?",
+        options: [
+            "Random Forest",
+            "PCA",
+            "Logistic Regression",
+            "Decision Tree"
+        ],
+        answer: 1,
+        explanation: "PCA reduces dimensionality."
+    },
+    {
+        category: "Data Visualization",
+        question: "Which plot is best for checking correlation between two variables?",
+        options: [
+            "Pie Chart",
+            "Scatter Plot",
+            "Histogram",
+            "Bar Chart"
+        ],
+        answer: 1,
+        explanation: "Scatter plots show correlation between variables."
+    },
+    {
+        category: "Pandas",
+        question: "What is the output type of df.head() in Pandas?",
+        options: [
+            "Series",
+            "List",
+            "DataFrame",
+            "Dictionary"
+        ],
+        answer: 2,
+        explanation: "df.head() returns a DataFrame."
+    },
+    {
+        category: "Pandas",
+        question: "Which function is used to read a CSV file using Pandas?",
+        options: [
+            "read_excel()",
+            "read_csv()",
+            "open_csv()",
+            "csv_read()"
+        ],
+        answer: 1,
+        explanation: "read_csv() reads CSV files."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which learning type uses labeled data?",
+        options: [
+            "Unsupervised Learning",
+            "Reinforcement Learning",
+            "Supervised Learning",
+            "Deep Learning"
+        ],
+        answer: 2,
+        explanation: "Supervised learning uses labeled data."
+    },
+    {
+        category: "Data Preprocessing",
+        question: "What is the purpose of normalization?",
+        options: [
+            "Increase dataset size",
+            "Reduce model accuracy",
+            "Scale features into a common range",
+            "Remove labels"
+        ],
+        answer: 2,
+        explanation: "Normalization scales features."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which algorithm is commonly used for clustering?",
+        options: [
+            "K-Means",
+            "Linear Regression",
+            "CNN",
+            "Naive Bayes"
+        ],
+        answer: 0,
+        explanation: "K-Means is used for clustering."
+    },
+    {
+        category: "Data Science",
+        question: "What does EDA stand for?",
+        options: [
+            "Exploratory Data Analysis",
+            "Experimental Data Access",
+            "External Data Analysis",
+            "Estimated Data Accuracy"
+        ],
+        answer: 0,
+        explanation: "EDA means Exploratory Data Analysis."
+    },
+    {
+        category: "Regression",
+        question: "Which metric is commonly used for regression problems?",
+        options: [
+            "Accuracy",
+            "Precision",
+            "Mean Squared Error",
+            "Recall"
+        ],
+        answer: 2,
+        explanation: "MSE is used in regression problems."
+    },
+    {
+        category: "Machine Learning",
+        question: "What is the main purpose of a confusion matrix?",
+        options: [
+            "Data cleaning",
+            "Feature scaling",
+            "Evaluate classification performance",
+            "Data visualization"
+        ],
+        answer: 2,
+        explanation: "Confusion matrix evaluates classification performance."
+    },
+    {
+        category: "Machine Learning",
+        question: "Which of the following is an unsupervised learning algorithm?",
+        options: [
+            "Decision Tree",
+            "Logistic Regression",
+            "K-Means",
+            "Linear Regression"
+        ],
+        answer: 2,
+        explanation: "K-Means is an unsupervised algorithm."
+    },
+    {
+        category: "Deep Learning",
+        question: "Which library is commonly used for deep learning?",
+        options: [
+            "TensorFlow",
+            "NumPy",
+            "Pandas",
+            "Seaborn"
+        ],
+        answer: 0,
+        explanation: "TensorFlow is widely used for deep learning."
+    },
+    {
+        category: "Generative AI",
+        question: "What is Generative AI mainly used for?",
+        options: [
+            "Storing data",
+            "Generating new content",
+            "Deleting data",
+            "Encrypting files"
+        ],
+        answer: 1,
+        explanation: "Generative AI creates new content."
+    },
+    {
+        category: "Generative AI",
+        question: "Which model is commonly used in Generative AI?",
+        options: [
+            "Decision Tree",
+            "GAN",
+            "KNN",
+            "Linear Regression"
+        ],
+        answer: 1,
+        explanation: "GANs are used in Generative AI."
+    },
+    {
+        category: "Artificial Intelligence",
+        question: "What does GPT stand for?",
+        options: [
+            "General Processing Tool",
+            "Generative Pre-trained Transformer",
+            "Global Predictive Technology",
+            "Graph Processing Technique"
+        ],
+        answer: 1,
+        explanation: "GPT stands for Generative Pre-trained Transformer."
+    },
+    {
+        category: "Generative AI",
+        question: "Which of the following is a text-to-image model?",
+        options: [
+            "BERT",
+            "Stable Diffusion",
+            "K-Means",
+            "Random Forest"
+        ],
+        answer: 1,
+        explanation: "Stable Diffusion generates images from text."
+    },
+    {
+        category: "Generative AI",
+        question: "What is a prompt in Generative AI?",
+        options: [
+            "Dataset",
+            "Input instruction given to model",
+            "Output result",
+            "Training error"
+        ],
+        answer: 1,
+        explanation: "A prompt is the instruction given to the AI."
+    },
+    {
+        category: "Artificial Intelligence",
+        question: "Which architecture is used in most large language models?",
+        options: [
+            "CNN",
+            "RNN",
+            "Transformer",
+            "SVM"
+        ],
+        answer: 2,
+        explanation: "Transformers power modern LLMs."
+    },
+    {
+        category: "Generative AI",
+        question: "What is hallucination in Generative AI?",
+        options: [
+            "Model becomes slow",
+            "Model generates incorrect or false information",
+            "Model stops working",
+            "Model deletes data"
+        ],
+        answer: 1,
+        explanation: "Hallucination means generating false information."
+    },
+    {
+        category: "Artificial Intelligence",
+        question: "Which company developed ChatGPT?",
+        options: [
+            "Google",
+            "Microsoft",
+            "OpenAI",
+            "Meta"
+        ],
+        answer: 2,
+        explanation: "ChatGPT was developed by OpenAI."
+    },
+    {
+        category: "Artificial Intelligence",
+        question: "What is fine-tuning in AI?",
+        options: [
+            "Deleting a model",
+            "Training model from scratch",
+            "Adjusting a pre-trained model for a specific task",
+            "Compressing data"
+        ],
+        answer: 2,
+        explanation: "Fine-tuning adapts pre-trained models."
+    },
+    {
+        category: "Generative AI",
+        question: "Which of the following is NOT a Generative AI application?",
+        options: [
+            "Text generation",
+            "Image generation",
+            "Data sorting",
+            "Music generation"
+        ],
+        answer: 2,
+        explanation: "Data sorting is not a Generative AI application."
+    },
+    {
+        category: "Generative AI",
+        question: "What does LLM stand for?",
+        options: [
+            "Large Language Model",
+            "Linear Learning Machine",
+            "Language Logic Model",
+            "Large Learning Machine"
+        ],
+        answer: 0,
+        explanation: "LLM stands for Large Language Model."
     }
 ];
 
