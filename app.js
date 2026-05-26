@@ -1183,12 +1183,12 @@ function updateRecentAttemptDisplay(name, phone, score) {
 
         if (badge) {
             if (score === 1) {
-                badge.textContent = "1/1 PASSED";
+                badge.textContent = "WELL DONE WINNWER";
                 badge.style.background = "rgba(16, 185, 129, 0.12)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.25)";
                 badge.style.color = "var(--success)";
             } else {
-                badge.textContent = "0/1 FAILED";
+                badge.textContent = "BETTER LUCK NEXT TIME";
                 badge.style.background = "rgba(239, 68, 68, 0.12)";
                 badge.style.border = "1px solid rgba(239, 68, 68, 0.25)";
                 badge.style.color = "var(--error)";
