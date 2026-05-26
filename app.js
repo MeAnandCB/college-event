@@ -1183,7 +1183,7 @@ function updateRecentAttemptDisplay(name, phone, score) {
 
         if (badge) {
             if (score === 1) {
-                badge.textContent = "WELL DONE WINNWER";
+                badge.textContent = "WELL DONE WINNER";
                 badge.style.background = "rgba(16, 185, 129, 0.12)";
                 badge.style.border = "1px solid rgba(16, 185, 129, 0.25)";
                 badge.style.color = "var(--success)";
