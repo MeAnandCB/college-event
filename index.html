@@ -106,117 +106,103 @@
                     </div>
                 </div>
 
-                <!-- CSV Data Export -->
-                <div
-                    style="margin-top: 32px; width: 100%; max-width: 480px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px;">
-                    <button id="export-csv-btn" class="btn secondary-btn"
-                        style="padding: 10px 20px; font-size: 0.8rem; border-radius: 10px; opacity: 0.75; transition: var(--transition-smooth); width: 100%;">
-                        <span>📥 EXPORT COLLECTED DATABASE (CSV)</span>
-                    </button>
-                </div>
 
-                <!-- Privacy note (helps avoid Google Safe Browsing flags) -->
-                <p
-                    style="margin-top: 20px; font-size: 0.72rem; color: var(--text-dim); max-width: 480px; line-height: 1.5;">
-                    Data collected is used solely for event participation tracking. We do not share your information
-                    with third parties.
-                </p>
-            </section>
 
-            <!-- 2. ACTIVE QUIZ SCREEN -->
-            <section id="quiz-screen" class="screen-card hidden">
-                <!-- Info Header (Progress, Category, Timer) -->
-                <div class="quiz-status-bar">
-                    <div class="question-tracker">
-                        Question <span id="current-q-num">1</span> <span class="dim">/ <span
-                                id="total-q-num">1</span></span>
+                <!-- 2. ACTIVE QUIZ SCREEN -->
+                <section id="quiz-screen" class="screen-card hidden">
+                    <!-- Info Header (Progress, Category, Timer) -->
+                    <div class="quiz-status-bar">
+                        <div class="question-tracker">
+                            Question <span id="current-q-num">1</span> <span class="dim">/ <span
+                                    id="total-q-num">1</span></span>
+                        </div>
+                        <div id="question-category" class="category-tag">QUANTUM COMPUTING</div>
+                        <div class="timer-container">
+                            <svg class="timer-ring" width="42" height="42">
+                                <circle class="timer-ring-bg" stroke="rgba(255,255,255,0.06)" stroke-width="3"
+                                    fill="transparent" r="18" cx="21" cy="21" />
+                                <circle id="timer-ring-progress" class="timer-ring-indicator"
+                                    stroke="url(#cyan-purple-grad)" stroke-width="3.5" fill="transparent" r="18" cx="21"
+                                    cy="21" stroke-dasharray="113" stroke-dashoffset="0" />
+                                <defs>
+                                    <linearGradient id="cyan-purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#06b6d4" />
+                                        <stop offset="100%" stop-color="#8b5cf6" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span id="timer-seconds">30</span>
+                        </div>
                     </div>
-                    <div id="question-category" class="category-tag">QUANTUM COMPUTING</div>
-                    <div class="timer-container">
-                        <svg class="timer-ring" width="42" height="42">
-                            <circle class="timer-ring-bg" stroke="rgba(255,255,255,0.06)" stroke-width="3"
-                                fill="transparent" r="18" cx="21" cy="21" />
-                            <circle id="timer-ring-progress" class="timer-ring-indicator"
-                                stroke="url(#cyan-purple-grad)" stroke-width="3.5" fill="transparent" r="18" cx="21"
-                                cy="21" stroke-dasharray="113" stroke-dashoffset="0" />
-                            <defs>
-                                <linearGradient id="cyan-purple-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#06b6d4" />
-                                    <stop offset="100%" stop-color="#8b5cf6" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-                        <span id="timer-seconds">30</span>
+
+                    <!-- Animated Progress Bar -->
+                    <div class="progress-bar-track">
+                        <div id="progress-bar-fill" class="progress-bar-fill"></div>
                     </div>
-                </div>
 
-                <!-- Animated Progress Bar -->
-                <div class="progress-bar-track">
-                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
-                </div>
-
-                <!-- Question Card -->
-                <div class="question-box">
-                    <h2 id="question-text">Loading question...</h2>
-                </div>
-
-                <!-- Option Cards Grid -->
-                <div class="options-grid" id="options-grid">
-                    <button class="option-card" data-idx="0">
-                        <span class="option-label">A</span>
-                        <span class="option-content">Option A</span>
-                        <div class="option-glow"></div>
-                        <div class="status-marker"></div>
-                    </button>
-                    <button class="option-card" data-idx="1">
-                        <span class="option-label">B</span>
-                        <span class="option-content">Option B</span>
-                        <div class="option-glow"></div>
-                        <div class="status-marker"></div>
-                    </button>
-                    <button class="option-card" data-idx="2">
-                        <span class="option-label">C</span>
-                        <span class="option-content">Option C</span>
-                        <div class="option-glow"></div>
-                        <div class="status-marker"></div>
-                    </button>
-                    <button class="option-card" data-idx="3">
-                        <span class="option-label">D</span>
-                        <span class="option-content">Option D</span>
-                        <div class="option-glow"></div>
-                        <div class="status-marker"></div>
-                    </button>
-                </div>
-
-                <!-- Explanation/Feedback Panel -->
-                <div id="feedback-panel" class="feedback-panel hidden">
-                    <div class="feedback-indicator">
-                        <span id="feedback-icon"></span>
-                        <span id="feedback-verdict">CORRECT PROTOCOL</span>
+                    <!-- Question Card -->
+                    <div class="question-box">
+                        <h2 id="question-text">Loading question...</h2>
                     </div>
-                    <p id="explanation-text" class="explanation-text"></p>
-                </div>
 
-                <!-- Call-to-actions -->
-                <div class="quiz-actions">
-                    <button id="lock-btn" class="btn primary-btn active-lock-btn" disabled>
-                        <span class="lock-icon">🔒</span>
-                        <span id="lock-btn-text">SELECT OPTION</span>
-                    </button>
-                    <button id="next-btn" class="btn secondary-btn hidden">
-                        <span>NEXT PROTOCOL</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                            <polyline points="12 5 19 12 12 19"></polyline>
-                        </svg>
-                    </button>
-                </div>
-            </section>
+                    <!-- Option Cards Grid -->
+                    <div class="options-grid" id="options-grid">
+                        <button class="option-card" data-idx="0">
+                            <span class="option-label">A</span>
+                            <span class="option-content">Option A</span>
+                            <div class="option-glow"></div>
+                            <div class="status-marker"></div>
+                        </button>
+                        <button class="option-card" data-idx="1">
+                            <span class="option-label">B</span>
+                            <span class="option-content">Option B</span>
+                            <div class="option-glow"></div>
+                            <div class="status-marker"></div>
+                        </button>
+                        <button class="option-card" data-idx="2">
+                            <span class="option-label">C</span>
+                            <span class="option-content">Option C</span>
+                            <div class="option-glow"></div>
+                            <div class="status-marker"></div>
+                        </button>
+                        <button class="option-card" data-idx="3">
+                            <span class="option-label">D</span>
+                            <span class="option-content">Option D</span>
+                            <div class="option-glow"></div>
+                            <div class="status-marker"></div>
+                        </button>
+                    </div>
+
+                    <!-- Explanation/Feedback Panel -->
+                    <div id="feedback-panel" class="feedback-panel hidden">
+                        <div class="feedback-indicator">
+                            <span id="feedback-icon"></span>
+                            <span id="feedback-verdict">CORRECT PROTOCOL</span>
+                        </div>
+                        <p id="explanation-text" class="explanation-text"></p>
+                    </div>
+
+                    <!-- Call-to-actions -->
+                    <div class="quiz-actions">
+                        <button id="lock-btn" class="btn primary-btn active-lock-btn" disabled>
+                            <span class="lock-icon">🔒</span>
+                            <span id="lock-btn-text">SELECT OPTION</span>
+                        </button>
+                        <button id="next-btn" class="btn secondary-btn hidden">
+                            <span>NEXT PROTOCOL</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                </section>
         </main>
 
         <footer class="app-footer">
-            <p>QuantumQuiz v1.0.4 &bull; Anvitha Infotech &bull; Data used for event purposes only.</p>
+            <p>STUDENT BRAIN BATTLE v1.0.4 &bull; Anvitha Infotech &bull; Data used for event purposes only.</p>
         </footer>
     </div>
 
