@@ -60,8 +60,6 @@
                     style="max-width: 500px; margin-left: auto; margin-right: auto; margin-bottom: 28px;">Test your
                     knowledge in a fast-paced single-question challenge on basic IT and coding.</p>
 
-
-
                 <form id="start-form" class="auth-form" style="width: 100%; max-width: 480px;">
                     <div class="input-group">
                         <input type="text" id="player-name" required placeholder="Enter Full Name..." maxlength="24"
@@ -108,7 +106,7 @@
                     </div>
                 </div>
 
-                <!-- CSV Data Export link/button for organizer -->
+                <!-- CSV Data Export -->
                 <div
                     style="margin-top: 32px; width: 100%; max-width: 480px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 24px;">
                     <button id="export-csv-btn" class="btn secondary-btn"
@@ -116,6 +114,13 @@
                         <span>📥 EXPORT COLLECTED DATABASE (CSV)</span>
                     </button>
                 </div>
+
+                <!-- Privacy note (helps avoid Google Safe Browsing flags) -->
+                <p
+                    style="margin-top: 20px; font-size: 0.72rem; color: var(--text-dim); max-width: 480px; line-height: 1.5;">
+                    Data collected is used solely for event participation tracking. We do not share your information
+                    with third parties.
+                </p>
             </section>
 
             <!-- 2. ACTIVE QUIZ SCREEN -->
@@ -152,36 +157,32 @@
 
                 <!-- Question Card -->
                 <div class="question-box">
-                    <h2 id="question-text">Decoding interstellar hyper-frequencies requires which specific model?</h2>
+                    <h2 id="question-text">Loading question...</h2>
                 </div>
 
                 <!-- Option Cards Grid -->
                 <div class="options-grid" id="options-grid">
-                    <!-- Option A -->
                     <button class="option-card" data-idx="0">
                         <span class="option-label">A</span>
-                        <span class="option-content">Bose-Einstein Quantum Singularity Grid</span>
+                        <span class="option-content">Option A</span>
                         <div class="option-glow"></div>
                         <div class="status-marker"></div>
                     </button>
-                    <!-- Option B -->
                     <button class="option-card" data-idx="1">
                         <span class="option-label">B</span>
-                        <span class="option-content">Fermi-Dirac Degenerate Gas Approximation</span>
+                        <span class="option-content">Option B</span>
                         <div class="option-glow"></div>
                         <div class="status-marker"></div>
                     </button>
-                    <!-- Option C -->
                     <button class="option-card" data-idx="2">
                         <span class="option-label">C</span>
-                        <span class="option-content">Relativistic Minkowski Spacetime Tensor</span>
+                        <span class="option-content">Option C</span>
                         <div class="option-glow"></div>
                         <div class="status-marker"></div>
                     </button>
-                    <!-- Option D -->
                     <button class="option-card" data-idx="3">
                         <span class="option-label">D</span>
-                        <span class="option-content">Non-Euclidean Hyperbolic Wave-Function Matrix</span>
+                        <span class="option-content">Option D</span>
                         <div class="option-glow"></div>
                         <div class="status-marker"></div>
                     </button>
@@ -193,10 +194,7 @@
                         <span id="feedback-icon"></span>
                         <span id="feedback-verdict">CORRECT PROTOCOL</span>
                     </div>
-                    <p id="explanation-text" class="explanation-text">
-                        The Bose-Einstein model satisfies the sub-zero thermal environment required for superconducting
-                        hyper-frequency antenna resonance.
-                    </p>
+                    <p id="explanation-text" class="explanation-text"></p>
                 </div>
 
                 <!-- Call-to-actions -->
@@ -205,7 +203,6 @@
                         <span class="lock-icon">🔒</span>
                         <span id="lock-btn-text">SELECT OPTION</span>
                     </button>
-
                     <button id="next-btn" class="btn secondary-btn hidden">
                         <span>NEXT PROTOCOL</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -216,11 +213,10 @@
                     </button>
                 </div>
             </section>
-
         </main>
 
         <footer class="app-footer">
-            <p>QuantumQuiz v1.0.0 &bull; Secure College Event Engine</p>
+            <p>QuantumQuiz v1.0.0 &bull; Luminar Technolab &bull; Data used for event purposes only.</p>
         </footer>
     </div>
 
