@@ -12,7 +12,24 @@
 const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSffgdcw8wTvkRdSmlJAnhoCWvl_HikHSo5jDuLq-SNtygku1w/formResponse";
 const GOOGLE_ENTRY_NAME = "entry.1330376225";   // Name field
 const GOOGLE_ENTRY_PHONE = "entry.49910056";     // Phone Number field
+const GOOGLE_ENTRY_QUALIFICATION = "entry.1777786905"; // Qualification field
 // ───────────────────────────────────────────────────────────────────────────
+
+// Phone uniqueness registry (localStorage)
+function getRegisteredPhones() {
+    const data = localStorage.getItem("quantum_quiz_registered_phones");
+    return data ? JSON.parse(data) : [];
+}
+function isPhoneRegistered(phone) {
+    return getRegisteredPhones().includes(phone);
+}
+function registerPhone(phone) {
+    const phones = getRegisteredPhones();
+    if (!phones.includes(phone)) {
+        phones.push(phone);
+        localStorage.setItem("quantum_quiz_registered_phones", JSON.stringify(phones));
+    }
+}
 
 
 // 1. QUESTION DATABASE
@@ -643,6 +660,7 @@ function shuffleArray(array) {
 const gameState = {
     playerName: "",
     playerPhone: "",
+    playerQualification: "",
     currentQuestionIndex: 0,
     score: 0,
     selectedOptionIdx: null,
@@ -873,10 +891,11 @@ function saveScore(name, phone, score) {
 // 6. GOOGLE FORM SUBMISSION
 // Uses no-cors mode — data lands in your Google Sheet silently.
 // You will NOT see a success/error response in JS; that is normal behaviour.
-function submitToGoogleForm(name, phone) {
+function submitToGoogleForm(name, phone, qualification) {
     const body = new URLSearchParams();
     body.append(GOOGLE_ENTRY_NAME, name);
     body.append(GOOGLE_ENTRY_PHONE, phone);
+    body.append(GOOGLE_ENTRY_QUALIFICATION, qualification || "");
 
     fetch(GOOGLE_FORM_ACTION, {
         method: "POST",
@@ -1111,25 +1130,28 @@ function finishQuiz() {
     // 1. Save to local leaderboard (CSV backup)
     saveScore(gameState.playerName, gameState.playerPhone, gameState.score);
 
-    // 2. ─── SUBMIT TO GOOGLE FORM ────────────────────────────────────────
-    submitToGoogleForm(gameState.playerName, gameState.playerPhone);
+    // 2. ─── LOCK PHONE AS USED ───────────────────────────────────────────
+    registerPhone(gameState.playerPhone);
+
+    // 3. ─── SUBMIT TO GOOGLE FORM ────────────────────────────────────────
+    submitToGoogleForm(gameState.playerName, gameState.playerPhone, gameState.playerQualification);
     // ─────────────────────────────────────────────────────────────────────
 
-    // 3. Save latest attempt for Welcome screen display
+    // 4. Save latest attempt for Welcome screen display
     localStorage.setItem("quantum_quiz_last_attempt", JSON.stringify({
         name: gameState.playerName,
         phone: gameState.playerPhone,
         score: gameState.score
     }));
 
-    // 4. Audio cue
+    // 5. Audio cue
     if (gameState.score === 1) {
         playSynthSound('triumph');
     } else {
         playSynthSound('incorrect');
     }
 
-    // 5. Return to Welcome screen
+    // 6. Return to Welcome screen
     returnToWelcomeScreen();
 }
 
@@ -1160,6 +1182,13 @@ function returnToWelcomeScreen() {
     if (nameInput) nameInput.value = "";
     if (phoneInput) phoneInput.value = "";
 
+    // Clear qualification selection
+    document.querySelectorAll(".qual-btn").forEach(b => b.classList.remove("qual-selected"));
+    const qualError  = document.getElementById("qual-error");
+    const phoneError = document.getElementById("phone-error");
+    if (qualError)  qualError.style.display  = "none";
+    if (phoneError) phoneError.style.display = "none";
+
     // Reset game state
     gameState.currentQuestionIndex = 0;
     gameState.score = 0;
@@ -1167,6 +1196,7 @@ function returnToWelcomeScreen() {
     gameState.isLocked = false;
     gameState.playerName = "";
     gameState.playerPhone = "";
+    gameState.playerQualification = "";
 }
 
 function updateRecentAttemptDisplay(name, phone, score) {
@@ -1211,39 +1241,88 @@ document.addEventListener("DOMContentLoaded", () => {
         updateRecentAttemptDisplay(name, phone, score);
     }
 
+    // Clear phone error while user corrects the number
+    const phoneInputEl = document.getElementById("player-phone");
+    if (phoneInputEl) {
+        phoneInputEl.addEventListener("input", () => {
+            const phoneError = document.getElementById("phone-error");
+            if (phoneError) phoneError.style.display = "none";
+        });
+    }
+
+    // Qualification button selection
+    document.querySelectorAll(".qual-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".qual-btn").forEach(b => b.classList.remove("qual-selected"));
+            btn.classList.add("qual-selected");
+            gameState.playerQualification = btn.getAttribute("data-val");
+            const qualError = document.getElementById("qual-error");
+            if (qualError) qualError.style.display = "none";
+        });
+    });
+
     // Form submission → start quiz
     const startForm = document.getElementById("start-form");
     if (startForm) {
         startForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const nameInput = document.getElementById("player-name");
+            const nameInput  = document.getElementById("player-name");
             const phoneInput = document.getElementById("player-phone");
+            const phoneError = document.getElementById("phone-error");
+            const qualError  = document.getElementById("qual-error");
 
-            if (nameInput && nameInput.value.trim() && phoneInput && phoneInput.value.trim()) {
-                gameState.playerName = nameInput.value.trim();
-                gameState.playerPhone = phoneInput.value.trim();
+            let hasError = false;
 
-                // Pick 1 random question from the shuffled pool
-                const allQuestions = [...QUIZ_QUESTIONS];
-                shuffleArray(allQuestions);
-                gameState.activeQuestions = [allQuestions[0]];
-                gameState.currentQuestionIndex = 0;
-                gameState.score = 0;
-
-                initAudio();
-                playSynthSound('tap');
-
-                const welcomeScreen = document.getElementById("welcome-screen");
-                const quizScreen = document.getElementById("quiz-screen");
-
-                if (welcomeScreen) welcomeScreen.classList.add("hidden");
-                if (quizScreen) {
-                    quizScreen.classList.remove("hidden");
-                    quizScreen.classList.add("active");
-                }
-
-                loadQuestion();
+            // Qualification required
+            if (!gameState.playerQualification) {
+                if (qualError) qualError.style.display = "block";
+                hasError = true;
             }
+
+            // Phone: exactly 10 digits
+            const phone = phoneInput ? phoneInput.value.trim() : "";
+            if (!/^[0-9]{10}$/.test(phone)) {
+                if (phoneError) {
+                    phoneError.textContent = "Please enter a valid 10-digit mobile number.";
+                    phoneError.style.display = "block";
+                }
+                hasError = true;
+            } else if (isPhoneRegistered(phone)) {
+                if (phoneError) {
+                    phoneError.textContent = "This number has already participated. Only one attempt per number is allowed.";
+                    phoneError.style.display = "block";
+                }
+                hasError = true;
+            }
+
+            const name = nameInput ? nameInput.value.trim() : "";
+            if (!name) hasError = true;
+
+            if (hasError) return;
+
+            gameState.playerName  = name;
+            gameState.playerPhone = phone;
+
+            // Pick 1 random question from the shuffled pool
+            const allQuestions = [...QUIZ_QUESTIONS];
+            shuffleArray(allQuestions);
+            gameState.activeQuestions = [allQuestions[0]];
+            gameState.currentQuestionIndex = 0;
+            gameState.score = 0;
+
+            initAudio();
+            playSynthSound('tap');
+
+            const welcomeScreen = document.getElementById("welcome-screen");
+            const quizScreen    = document.getElementById("quiz-screen");
+
+            if (welcomeScreen) welcomeScreen.classList.add("hidden");
+            if (quizScreen) {
+                quizScreen.classList.remove("hidden");
+                quizScreen.classList.add("active");
+            }
+
+            loadQuestion();
         });
     }
 
