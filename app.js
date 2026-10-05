@@ -36,616 +36,459 @@ function registerPhone(phone) {
 // 1. QUESTION DATABASE
 const QUIZ_QUESTIONS = [
     {
-        category: "Computer Basics",
-        question: "What does CPU stand for?",
-        options: [
-            "Central Process Unit",
-            "Central Processing Unit",
-            "Computer Personal Unit",
-            "Central Processor Utility"
-        ],
+        category: "Networking",
+        question: "Which protocol translates domain names into IP addresses?",
+        options: ["DHCP", "DNS", "ARP", "ICMP"],
         answer: 1,
-        explanation: "CPU stands for Central Processing Unit."
+        explanation: "DNS (Domain Name System) resolves domain names to IP addresses."
     },
     {
-        category: "Operating Systems",
-        question: "Which of the following is an operating system?",
-        options: [
-            "Python",
-            "Linux",
-            "HTML",
-            "MySQL"
-        ],
-        answer: 1,
-        explanation: "Linux is an operating system."
+        category: "Networking",
+        question: "What is the default port number for HTTPS?",
+        options: ["80", "8080", "443", "21"],
+        answer: 2,
+        explanation: "HTTPS uses port 443 by default."
     },
     {
-        category: "Computer Memory",
-        question: "What is the full form of RAM?",
-        options: [
-            "Random Access Memory",
-            "Read Access Memory",
-            "Run Access Memory",
-            "Random Actual Memory"
-        ],
+        category: "Networking",
+        question: "Which OSI layer is responsible for routing packets between networks?",
+        options: ["Data Link", "Transport", "Network", "Session"],
+        answer: 2,
+        explanation: "The Network layer (layer 3) handles logical addressing and routing."
+    },
+    {
+        category: "Networking",
+        question: "Which sequence describes the TCP connection handshake?",
+        options: ["SYN, ACK, FIN", "SYN, SYN-ACK, ACK", "ACK, FIN, RST", "HELLO, OK, BYE"],
+        answer: 1,
+        explanation: "The TCP handshake is SYN, then SYN-ACK, then ACK."
+    },
+    {
+        category: "Networking",
+        question: "Which of these is a private IP address?",
+        options: ["8.8.8.8", "192.168.1.1", "1.1.1.1", "142.250.0.1"],
+        answer: 1,
+        explanation: "192.168.0.0/16 is a private range reserved for local networks."
+    },
+    {
+        category: "Networking",
+        question: "Which command checks whether a host is reachable by sending ICMP echo requests?",
+        options: ["ping", "netstat", "ipconfig", "hostname"],
         answer: 0,
-        explanation: "RAM stands for Random Access Memory."
-    },
-    {
-        category: "Web Development",
-        question: "Which language is mainly used for web page structure?",
-        options: [
-            "CSS",
-            "Python",
-            "HTML",
-            "Java"
-        ],
-        answer: 2,
-        explanation: "HTML creates the structure of web pages."
+        explanation: "ping sends ICMP echo requests to a host."
     },
     {
         category: "Networking",
-        question: "Which protocol is secure?",
-        options: [
-            "HTTP",
-            "FTP",
-            "HTTPS",
-            "SMTP"
-        ],
-        answer: 2,
-        explanation: "HTTPS is the secure version of HTTP."
+        question: "What is the main job of DHCP?",
+        options: ["Assigns IP addresses automatically", "Encrypts network traffic", "Resolves domain names", "Filters web content"],
+        answer: 0,
+        explanation: "DHCP leases IP addresses and other settings to devices."
     },
     {
-        category: "Programming",
-        question: "Which company developed Python?",
-        options: [
-            "Microsoft",
-            "Apple",
-            "Google",
-            "Guido van Rossum"
-        ],
-        answer: 3,
-        explanation: "Python was created by Guido van Rossum."
+        category: "Security",
+        question: "Which of these is a symmetric encryption algorithm?",
+        options: ["RSA", "AES", "Diffie-Hellman", "ECDSA"],
+        answer: 1,
+        explanation: "AES uses the same key for encryption and decryption."
     },
     {
-        category: "Networking",
-        question: "Which device is used to connect networks?",
+        category: "Security",
+        question: "What is the main purpose of a hash function?",
         options: [
-            "Monitor",
-            "Router",
-            "Keyboard",
-            "Printer"
+            "Encrypt data so it can be decrypted later",
+            "Produce a fixed-size digest to check integrity",
+            "Compress files",
+            "Generate random numbers"
         ],
         answer: 1,
-        explanation: "A router connects multiple networks."
-    },
-    {
-        category: "Artificial Intelligence",
-        question: "What does AI stand for?",
-        options: [
-            "Automated Internet",
-            "Artificial Intelligence",
-            "Advanced Interface",
-            "Artificial Internet"
-        ],
-        answer: 1,
-        explanation: "AI stands for Artificial Intelligence."
+        explanation: "Hashes are one-way and are used to verify that data has not changed."
     },
     {
         category: "Database",
-        question: "Which of the following is a database language?",
-        options: [
-            "SQL",
-            "HTML",
-            "CSS",
-            "XML"
-        ],
-        answer: 0,
-        explanation: "SQL is used for database management."
+        question: "Which SQL clause filters groups created by GROUP BY?",
+        options: ["WHERE", "HAVING", "ORDER BY", "LIMIT"],
+        answer: 1,
+        explanation: "HAVING filters aggregated groups; WHERE filters rows before grouping."
     },
     {
-        category: "Computer Memory",
-        question: "Which memory is temporary?",
+        category: "Database",
+        question: "What does ACID stand for in database transactions?",
         options: [
-            "ROM",
-            "Hard Disk",
-            "RAM",
-            "DVD"
-        ],
-        answer: 2,
-        explanation: "RAM stores temporary data."
-    },
-    {
-        category: "Hardware",
-        question: "Which of the following is an input device?",
-        options: [
-            "Printer",
-            "Speaker",
-            "Keyboard",
-            "Monitor"
-        ],
-        answer: 2,
-        explanation: "Keyboard is an input device."
-    },
-    {
-        category: "Computer Basics",
-        question: "What is the brain of the computer?",
-        options: [
-            "RAM",
-            "CPU",
-            "Hard Disk",
-            "GPU"
+            "Access, Control, Integrity, Detection",
+            "Atomicity, Consistency, Isolation, Durability",
+            "Availability, Consistency, Integrity, Dependency",
+            "Atomicity, Concurrency, Indexing, Durability"
         ],
         answer: 1,
-        explanation: "CPU is considered the brain of the computer."
+        explanation: "ACID stands for Atomicity, Consistency, Isolation, Durability."
     },
     {
-        category: "Python",
-        question: "Which symbol is used for comments in Python?",
-        options: [
-            "//",
-            "<!-- -->",
-            "#",
-            "%%"
-        ],
+        category: "Database",
+        question: "Which normal form removes transitive dependencies?",
+        options: ["1NF", "2NF", "3NF", "4NF"],
         answer: 2,
-        explanation: "Python uses # for comments."
+        explanation: "3NF removes transitive dependencies on the primary key."
     },
     {
-        category: "Web Development",
-        question: "Which technology is used for styling web pages?",
+        category: "Database",
+        question: "What is a foreign key?",
         options: [
-            "HTML",
-            "CSS",
-            "SQL",
-            "Python"
+            "A column that uniquely identifies each row",
+            "A column that references the primary key of another table",
+            "An index on a table",
+            "A column that does not allow duplicates"
         ],
         answer: 1,
-        explanation: "CSS styles web pages."
+        explanation: "A foreign key links a column to the primary key of another table."
+    },
+    {
+        category: "Database",
+        question: "Which JOIN returns every row from the left table, with matching rows from the right table or NULLs where there is no match?",
+        options: ["INNER JOIN", "LEFT JOIN", "CROSS JOIN", "SELF JOIN"],
+        answer: 1,
+        explanation: "LEFT JOIN keeps all rows from the left table."
+    },
+    {
+        category: "Data Structures",
+        question: "What is the time complexity of binary search on a sorted array?",
+        options: ["O(n)", "O(log n)", "O(n log n)", "O(1)"],
+        answer: 1,
+        explanation: "Each step halves the search space, so the time is O(log n)."
+    },
+    {
+        category: "Data Structures",
+        question: "Which data structure follows Last In, First Out (LIFO)?",
+        options: ["Queue", "Stack", "Linked list", "Tree"],
+        answer: 1,
+        explanation: "A stack removes the most recently added item first."
+    },
+    {
+        category: "Data Structures",
+        question: "Which data structure is normally used to implement breadth-first search?",
+        options: ["Stack", "Queue", "Heap", "Hash table"],
+        answer: 1,
+        explanation: "BFS visits nodes level by level, which a queue supports."
+    },
+    {
+        category: "Data Structures",
+        question: "What is the average time complexity of a hash table lookup?",
+        options: ["O(n)", "O(log n)", "O(1)", "O(n²)"],
+        answer: 2,
+        explanation: "With a good hash function, lookups take constant time on average."
+    },
+    {
+        category: "Data Structures",
+        question: "Which sorting algorithm has average time complexity O(n log n) and is not stable in its usual form?",
+        options: ["Bubble Sort", "Insertion Sort", "Quick Sort", "Counting Sort"],
+        answer: 2,
+        explanation: "Quick Sort averages O(n log n) but is not stable in its usual implementation."
     },
     {
         category: "Programming",
-        question: "Which of the following is a programming language?",
+        question: "In object-oriented programming, what is encapsulation?",
         options: [
-            "Windows",
-            "Linux",
-            "Python",
-            "Google"
+            "Hiding internal state and exposing behaviour through methods",
+            "Inheriting properties from a parent class",
+            "Using one method name for many forms",
+            "Creating objects from a template"
         ],
-        answer: 2,
-        explanation: "Python is a programming language."
+        answer: 0,
+        explanation: "Encapsulation keeps internal data private and controls access through methods."
     },
     {
-        category: "Cybersecurity",
-        question: "What is phishing?",
+        category: "Web Development",
+        question: "What does HTTP status code 404 mean?",
+        options: ["Server error", "Not found", "Unauthorized", "Moved permanently"],
+        answer: 1,
+        explanation: "404 Not Found means the server cannot find the requested resource."
+    },
+    {
+        category: "Web Development",
+        question: "Which HTTP method is idempotent and typically used to replace an entire resource?",
+        options: ["POST", "PUT", "PATCH", "CONNECT"],
+        answer: 1,
+        explanation: "PUT replaces the target resource, and repeating the same PUT gives the same result."
+    },
+    {
+        category: "Web Development",
+        question: "What is a cookie in web development?",
         options: [
-            "Fishing game",
-            "Cyber attack to steal information",
-            "Database management",
-            "Programming method"
+            "A compiled program",
+            "A small piece of data stored by the browser and sent with requests",
+            "A type of database index",
+            "A CSS framework"
         ],
         answer: 1,
-        explanation: "Phishing is a cyber attack to steal information."
+        explanation: "Cookies store small pieces of data that the browser sends back to the server."
+    },
+    {
+        category: "Web Development",
+        question: "What does CORS control?",
+        options: [
+            "Which origins may make cross-origin requests to a server",
+            "Database access rights",
+            "Response compression",
+            "Image caching"
+        ],
+        answer: 0,
+        explanation: "CORS tells the browser which other origins may read a server's responses."
+    },
+    {
+        category: "Web Development",
+        question: "Which script attribute runs the script after the HTML is parsed while keeping script order?",
+        options: ["async", "defer", "lazy", "module"],
+        answer: 1,
+        explanation: "defer runs scripts after parsing, in the order they appear."
+    },
+    {
+        category: "Security",
+        question: "What is Cross-Site Scripting (XSS)?",
+        options: [
+            "Injecting malicious scripts into pages that other users view",
+            "A brute-force password attack",
+            "A denial-of-service attack",
+            "A way to encrypt cookies"
+        ],
+        answer: 0,
+        explanation: "XSS runs attacker-supplied scripts in other users' browsers."
+    },
+    {
+        category: "Security",
+        question: "Which attack is prevented by using parameterized queries?",
+        options: ["Cross-Site Scripting", "SQL Injection", "CSRF", "DDoS"],
+        answer: 1,
+        explanation: "Parameterized queries keep user input separate from the SQL code."
+    },
+    {
+        category: "Security",
+        question: "What is the main job of a firewall?",
+        options: [
+            "Speeds up the internet connection",
+            "Filters network traffic according to rules",
+            "Stores backups",
+            "Compresses files"
+        ],
+        answer: 1,
+        explanation: "A firewall allows or blocks traffic based on defined rules."
+    },
+    {
+        category: "Security",
+        question: "What does two-factor authentication (2FA) require?",
+        options: [
+            "Two separate passwords",
+            "Two different kinds of verification factors",
+            "Two devices running at the same time",
+            "Two backup copies of data"
+        ],
+        answer: 1,
+        explanation: "2FA combines two kinds of proof, such as a password and a one-time code."
     },
     {
         category: "Cloud Computing",
-        question: "Which one is a cloud platform?",
+        question: "Which cloud service model provides ready-to-use software over the internet?",
+        options: ["IaaS", "PaaS", "SaaS", "DBaaS"],
+        answer: 2,
+        explanation: "SaaS (Software as a Service) delivers complete applications over the internet."
+    },
+    {
+        category: "Cloud Computing",
+        question: "What is the key difference between a container and a virtual machine?",
         options: [
-            "AWS",
-            "MS Word",
-            "VLC",
-            "Notepad"
+            "Containers include a full guest OS",
+            "Containers share the host OS kernel",
+            "VMs cannot run Linux",
+            "Containers need more RAM than VMs"
+        ],
+        answer: 1,
+        explanation: "Containers share the host kernel, while each VM runs its own guest OS."
+    },
+    {
+        category: "DevOps",
+        question: "What does CI/CD stand for?",
+        options: [
+            "Continuous Integration / Continuous Delivery",
+            "Code Inspection / Code Deployment",
+            "Central Integration / Central Delivery",
+            "Continuous Improvement / Continuous Development"
         ],
         answer: 0,
-        explanation: "AWS is a cloud platform."
+        explanation: "CI/CD automates building, testing and delivering code changes."
     },
     {
-        category: "Internet",
-        question: "What does URL stand for?",
+        category: "Version Control",
+        question: "Which Git command creates a new branch and switches to it?",
+        options: ["git branch new", "git checkout -b new", "git merge new", "git clone new"],
+        answer: 1,
+        explanation: "git checkout -b creates the branch and switches to it in one step."
+    },
+    {
+        category: "Version Control",
+        question: "Which Git command saves staged changes to the local repository?",
+        options: ["git push", "git commit", "git add", "git fetch"],
+        answer: 1,
+        explanation: "git commit records staged changes as a new commit."
+    },
+    {
+        category: "Software Engineering",
+        question: "What is the purpose of unit testing?",
         options: [
-            "Uniform Resource Locator",
-            "Universal Resource Link",
-            "Uniform Read Locator",
-            "Universal Read Link"
+            "Test the whole system end to end",
+            "Test individual components in isolation",
+            "Measure network speed",
+            "Deploy code to production"
+        ],
+        answer: 1,
+        explanation: "Unit tests check small pieces of code on their own."
+    },
+    {
+        category: "Web Development",
+        question: "What does REST stand for?",
+        options: [
+            "Representational State Transfer",
+            "Remote Execution Service Template",
+            "Reliable Element Sharing Tool",
+            "Relational System Transfer"
         ],
         answer: 0,
-        explanation: "URL stands for Uniform Resource Locator."
+        explanation: "REST stands for Representational State Transfer."
     },
     {
-        category: "Open Source",
-        question: "Which of the following is open-source?",
-        options: [
-            "Windows",
-            "Linux",
-            "MS Office",
-            "Photoshop"
-        ],
+        category: "Hardware",
+        question: "Which type of memory is fastest and closest to the CPU?",
+        options: ["RAM", "Cache", "SSD", "Hard Disk"],
         answer: 1,
-        explanation: "Linux is open-source software."
+        explanation: "CPU cache is the fastest memory after registers and sits closest to the processor."
     },
     {
-        category: "Data Science",
-        question: "Which field deals with analyzing large amounts of data?",
+        category: "Operating Systems",
+        question: "What does the process scheduler do?",
         options: [
-            "Cybersecurity",
-            "Networking",
-            "Data Science",
-            "Web Design"
-        ],
-        answer: 2,
-        explanation: "Data Science analyzes large datasets."
-    },
-    {
-        category: "Python Libraries",
-        question: "Which library is mainly used for data analysis in Python?",
-        options: [
-            "NumPy",
-            "Pandas",
-            "Matplotlib",
-            "TensorFlow"
-        ],
-        answer: 1,
-        explanation: "Pandas is mainly used for data analysis."
-    },
-    {
-        category: "Data Visualization",
-        question: "Which of the following is used for data visualization?",
-        options: [
-            "Pandas",
-            "NumPy",
-            "Matplotlib",
-            "Flask"
-        ],
-        answer: 2,
-        explanation: "Matplotlib is used for visualization."
-    },
-    {
-        category: "Machine Learning",
-        question: "What is the primary purpose of train-test split?",
-        options: [
-            "To clean data",
-            "To increase dataset size",
-            "To evaluate model performance",
-            "To visualize data"
-        ],
-        answer: 2,
-        explanation: "Train-test split evaluates model performance."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which algorithm is used for classification problems?",
-        options: [
-            "Linear Regression",
-            "Logistic Regression",
-            "K-Means",
-            "PCA"
-        ],
-        answer: 1,
-        explanation: "Logistic Regression is used for classification."
-    },
-    {
-        category: "Data Science",
-        question: "What does NaN represent in a dataset?",
-        options: [
-            "Negative value",
-            "No assigned number",
-            "Missing value",
-            "Null array number"
-        ],
-        answer: 2,
-        explanation: "NaN represents missing values."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which metric is commonly used for classification evaluation?",
-        options: [
-            "Mean Squared Error",
-            "Accuracy",
-            "RMSE",
-            "R-Squared"
-        ],
-        answer: 1,
-        explanation: "Accuracy is used for classification evaluation."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which library is widely used for machine learning?",
-        options: [
-            "OpenCV",
-            "Scikit-learn",
-            "BeautifulSoup",
-            "Flask"
-        ],
-        answer: 1,
-        explanation: "Scikit-learn is widely used for ML."
-    },
-    {
-        category: "Machine Learning",
-        question: "What is overfitting in Machine Learning?",
-        options: [
-            "Model performs well on training and test data",
-            "Model performs poorly on both datasets",
-            "Model memorizes training data and performs poorly on new data",
-            "Model ignores training data"
-        ],
-        answer: 2,
-        explanation: "Overfitting occurs when a model memorizes training data."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which technique is used to reduce dimensionality?",
-        options: [
-            "Random Forest",
-            "PCA",
-            "Logistic Regression",
-            "Decision Tree"
-        ],
-        answer: 1,
-        explanation: "PCA reduces dimensionality."
-    },
-    {
-        category: "Data Visualization",
-        question: "Which plot is best for checking correlation between two variables?",
-        options: [
-            "Pie Chart",
-            "Scatter Plot",
-            "Histogram",
-            "Bar Chart"
-        ],
-        answer: 1,
-        explanation: "Scatter plots show correlation between variables."
-    },
-    {
-        category: "Pandas",
-        question: "What is the output type of df.head() in Pandas?",
-        options: [
-            "Series",
-            "List",
-            "DataFrame",
-            "Dictionary"
-        ],
-        answer: 2,
-        explanation: "df.head() returns a DataFrame."
-    },
-    {
-        category: "Pandas",
-        question: "Which function is used to read a CSV file using Pandas?",
-        options: [
-            "read_excel()",
-            "read_csv()",
-            "open_csv()",
-            "csv_read()"
-        ],
-        answer: 1,
-        explanation: "read_csv() reads CSV files."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which learning type uses labeled data?",
-        options: [
-            "Unsupervised Learning",
-            "Reinforcement Learning",
-            "Supervised Learning",
-            "Deep Learning"
-        ],
-        answer: 2,
-        explanation: "Supervised learning uses labeled data."
-    },
-    {
-        category: "Data Preprocessing",
-        question: "What is the purpose of normalization?",
-        options: [
-            "Increase dataset size",
-            "Reduce model accuracy",
-            "Scale features into a common range",
-            "Remove labels"
-        ],
-        answer: 2,
-        explanation: "Normalization scales features."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which algorithm is commonly used for clustering?",
-        options: [
-            "K-Means",
-            "Linear Regression",
-            "CNN",
-            "Naive Bayes"
+            "Allocates CPU time to processes",
+            "Manages disk partitions",
+            "Encrypts files",
+            "Sends emails"
         ],
         answer: 0,
-        explanation: "K-Means is used for clustering."
+        explanation: "The scheduler decides which process runs on the CPU and when."
     },
     {
-        category: "Data Science",
-        question: "What does EDA stand for?",
+        category: "Operating Systems",
+        question: "What is virtual memory?",
         options: [
-            "Exploratory Data Analysis",
-            "Experimental Data Access",
-            "External Data Analysis",
-            "Estimated Data Accuracy"
+            "Memory in cloud servers",
+            "A technique that uses disk space to extend available RAM",
+            "Memory built into the GPU",
+            "Memory used only for graphics"
+        ],
+        answer: 1,
+        explanation: "Virtual memory pages less-used data out to disk to extend usable memory."
+    },
+    {
+        category: "Linux",
+        question: "What numeric value does the permission rwx represent in octal?",
+        options: ["4", "5", "7", "6"],
+        answer: 2,
+        explanation: "r=4, w=2, x=1, so rwx = 7."
+    },
+    {
+        category: "Linux",
+        question: "Which command prints the current working directory?",
+        options: ["ls", "pwd", "cd", "whoami"],
+        answer: 1,
+        explanation: "pwd stands for print working directory."
+    },
+    {
+        category: "Operating Systems",
+        question: "What is a deadlock?",
+        options: [
+            "Processes waiting forever for resources held by each other",
+            "A process running at high priority",
+            "A full disk",
+            "A network timeout"
         ],
         answer: 0,
-        explanation: "EDA means Exploratory Data Analysis."
+        explanation: "In a deadlock, each process waits for a resource that another process holds."
     },
     {
-        category: "Regression",
-        question: "Which metric is commonly used for regression problems?",
+        category: "Networking",
+        question: "What is the purpose of a DNS cache?",
         options: [
-            "Accuracy",
-            "Precision",
-            "Mean Squared Error",
-            "Recall"
-        ],
-        answer: 2,
-        explanation: "MSE is used in regression problems."
-    },
-    {
-        category: "Machine Learning",
-        question: "What is the main purpose of a confusion matrix?",
-        options: [
-            "Data cleaning",
-            "Feature scaling",
-            "Evaluate classification performance",
-            "Data visualization"
-        ],
-        answer: 2,
-        explanation: "Confusion matrix evaluates classification performance."
-    },
-    {
-        category: "Machine Learning",
-        question: "Which of the following is an unsupervised learning algorithm?",
-        options: [
-            "Decision Tree",
-            "Logistic Regression",
-            "K-Means",
-            "Linear Regression"
-        ],
-        answer: 2,
-        explanation: "K-Means is an unsupervised algorithm."
-    },
-    {
-        category: "Deep Learning",
-        question: "Which library is commonly used for deep learning?",
-        options: [
-            "TensorFlow",
-            "NumPy",
-            "Pandas",
-            "Seaborn"
+            "Stores recent domain-to-IP lookups to speed up resolution",
+            "Encrypts DNS queries",
+            "Stores website files",
+            "Balances server load"
         ],
         answer: 0,
-        explanation: "TensorFlow is widely used for deep learning."
+        explanation: "A DNS cache reuses recent lookups instead of asking a DNS server again."
     },
     {
-        category: "Generative AI",
-        question: "What is Generative AI mainly used for?",
-        options: [
-            "Storing data",
-            "Generating new content",
-            "Deleting data",
-            "Encrypting files"
-        ],
-        answer: 1,
-        explanation: "Generative AI creates new content."
+        category: "Hardware",
+        question: "What does SSD stand for?",
+        options: ["Solid State Drive", "Secure System Disk", "Static Storage Device", "Serial Storage Drive"],
+        answer: 0,
+        explanation: "SSD stands for Solid State Drive."
     },
     {
-        category: "Generative AI",
-        question: "Which model is commonly used in Generative AI?",
-        options: [
-            "Decision Tree",
-            "GAN",
-            "KNN",
-            "Linear Regression"
-        ],
-        answer: 1,
-        explanation: "GANs are used in Generative AI."
-    },
-    {
-        category: "Artificial Intelligence",
-        question: "What does GPT stand for?",
-        options: [
-            "General Processing Tool",
-            "Generative Pre-trained Transformer",
-            "Global Predictive Technology",
-            "Graph Processing Technique"
-        ],
-        answer: 1,
-        explanation: "GPT stands for Generative Pre-trained Transformer."
-    },
-    {
-        category: "Generative AI",
-        question: "Which of the following is a text-to-image model?",
-        options: [
-            "BERT",
-            "Stable Diffusion",
-            "K-Means",
-            "Random Forest"
-        ],
-        answer: 1,
-        explanation: "Stable Diffusion generates images from text."
-    },
-    {
-        category: "Generative AI",
-        question: "What is a prompt in Generative AI?",
-        options: [
-            "Dataset",
-            "Input instruction given to model",
-            "Output result",
-            "Training error"
-        ],
-        answer: 1,
-        explanation: "A prompt is the instruction given to the AI."
-    },
-    {
-        category: "Artificial Intelligence",
-        question: "Which architecture is used in most large language models?",
-        options: [
-            "CNN",
-            "RNN",
-            "Transformer",
-            "SVM"
-        ],
+        category: "Networking",
+        question: "Which protocol is used to send email from a client to a mail server?",
+        options: ["IMAP", "POP3", "SMTP", "FTP"],
         answer: 2,
-        explanation: "Transformers power modern LLMs."
+        explanation: "SMTP (Simple Mail Transfer Protocol) sends email."
     },
     {
-        category: "Generative AI",
-        question: "What is hallucination in Generative AI?",
+        category: "Networking",
+        question: "What is the main advantage of IPv6 over IPv4?",
         options: [
-            "Model becomes slow",
-            "Model generates incorrect or false information",
-            "Model stops working",
-            "Model deletes data"
-        ],
-        answer: 1,
-        explanation: "Hallucination means generating false information."
-    },
-    {
-        category: "Artificial Intelligence",
-        question: "Which company developed ChatGPT?",
-        options: [
-            "Google",
-            "Microsoft",
-            "OpenAI",
-            "Meta"
-        ],
-        answer: 2,
-        explanation: "ChatGPT was developed by OpenAI."
-    },
-    {
-        category: "Artificial Intelligence",
-        question: "What is fine-tuning in AI?",
-        options: [
-            "Deleting a model",
-            "Training model from scratch",
-            "Adjusting a pre-trained model for a specific task",
-            "Compressing data"
-        ],
-        answer: 2,
-        explanation: "Fine-tuning adapts pre-trained models."
-    },
-    {
-        category: "Generative AI",
-        question: "Which of the following is NOT a Generative AI application?",
-        options: [
-            "Text generation",
-            "Image generation",
-            "Data sorting",
-            "Music generation"
-        ],
-        answer: 2,
-        explanation: "Data sorting is not a Generative AI application."
-    },
-    {
-        category: "Generative AI",
-        question: "What does LLM stand for?",
-        options: [
-            "Large Language Model",
-            "Linear Learning Machine",
-            "Language Logic Model",
-            "Large Learning Machine"
+            "A much larger address space",
+            "Faster encryption",
+            "Built-in browser support",
+            "Fewer network layers"
         ],
         answer: 0,
-        explanation: "LLM stands for Large Language Model."
+        explanation: "IPv6 uses 128-bit addresses, which avoids running out of addresses."
+    },
+    {
+        category: "Security",
+        question: "What does an API key mainly do?",
+        options: [
+            "Speeds up API responses",
+            "Identifies and authenticates the calling application",
+            "Compresses API data",
+            "Stores user passwords"
+        ],
+        answer: 1,
+        explanation: "An API key identifies the caller so the server can control access."
+    },
+    {
+        category: "Web Development",
+        question: "Which HTTP status code means a resource was successfully created?",
+        options: ["200 OK", "201 Created", "204 No Content", "301 Moved Permanently"],
+        answer: 1,
+        explanation: "201 Created is returned after a new resource is created."
+    },
+    {
+        category: "Networking",
+        question: "What is the purpose of a load balancer?",
+        options: [
+            "Distributes incoming traffic across several servers",
+            "Encrypts user passwords",
+            "Stores database backups",
+            "Compiles source code"
+        ],
+        answer: 0,
+        explanation: "A load balancer spreads requests over multiple servers to share the load."
+    },
+    {
+        category: "Networking",
+        question: "What does latency measure in a network?",
+        options: [
+            "Amount of data transferred per second",
+            "Time a packet takes to travel from source to destination",
+            "Number of connected devices",
+            "Available storage"
+        ],
+        answer: 1,
+        explanation: "Latency is the delay between sending and receiving data."
     }
 ];
 
@@ -663,11 +506,21 @@ function shuffleArray(array) {
 // the whole cycle has been asked.
 const QUESTION_DECK_KEY = "quantum_quiz_question_deck";
 
+// Identifies the current question list, so a saved deck from an older list is discarded
+function questionSetId() {
+    const text = QUIZ_QUESTIONS.map((q) => q.question).join("|");
+    let hash = 5381;
+    for (let i = 0; i < text.length; i++) {
+        hash = ((hash << 5) + hash + text.charCodeAt(i)) | 0;
+    }
+    return `${QUIZ_QUESTIONS.length}-${hash}`;
+}
+
 function loadQuestionState() {
     try {
         const saved = JSON.parse(localStorage.getItem(QUESTION_DECK_KEY));
         const isValid = (i) => Number.isInteger(i) && i >= 0 && i < QUIZ_QUESTIONS.length;
-        if (saved && Array.isArray(saved.remaining)) {
+        if (saved && saved.setId === questionSetId() && Array.isArray(saved.remaining)) {
             return {
                 remaining: saved.remaining.filter(isValid),
                 last: isValid(saved.last) ? saved.last : null
@@ -681,7 +534,7 @@ function loadQuestionState() {
 
 function saveQuestionState(state) {
     try {
-        localStorage.setItem(QUESTION_DECK_KEY, JSON.stringify(state));
+        localStorage.setItem(QUESTION_DECK_KEY, JSON.stringify({ ...state, setId: questionSetId() }));
     } catch (e) {
         // Storage unavailable: the deck still works for this visit
     }
