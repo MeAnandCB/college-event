@@ -9,10 +9,11 @@
 //  3. Type anything in each field → click "Get link"
 //  4. The URL will show: ...?entry.123456789=test&entry.987654321=test
 //  5. Paste those numbers below, replacing XXXXXXXXX and YYYYYYYYY
-const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSffgdcw8wTvkRdSmlJAnhoCWvl_HikHSo5jDuLq-SNtygku1w/formResponse";
-const GOOGLE_ENTRY_NAME = "entry.1330376225";   // Name field
-const GOOGLE_ENTRY_PHONE = "entry.49910056";     // Phone Number field
-const GOOGLE_ENTRY_QUALIFICATION = "entry.1777786905"; // Qualification field
+const GOOGLE_FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLScl39-5NEgeV3wJse5BBy5dcNOBShXgmNIXeHH1ovqjMG3sww/formResponse";
+const GOOGLE_ENTRY_NAME = "entry.568779786";     // Full Name field
+const GOOGLE_ENTRY_PHONE = "entry.1396241237";   // Contact No field
+const GOOGLE_ENTRY_QUALIFICATION = "entry.1690160491"; // Qualification field
+const GOOGLE_ENTRY_YEAR = "entry.995673296";     // Year of Pass out field
 // ───────────────────────────────────────────────────────────────────────────
 
 // Phone uniqueness registry (localStorage)
@@ -661,6 +662,7 @@ const gameState = {
     playerName: "",
     playerPhone: "",
     playerQualification: "",
+    playerYear: "",
     currentQuestionIndex: 0,
     score: 0,
     selectedOptionIdx: null,
@@ -891,11 +893,12 @@ function saveScore(name, phone, score) {
 // 6. GOOGLE FORM SUBMISSION
 // Uses no-cors mode — data lands in your Google Sheet silently.
 // You will NOT see a success/error response in JS; that is normal behaviour.
-function submitToGoogleForm(name, phone, qualification) {
+function submitToGoogleForm(name, phone, qualification, year) {
     const body = new URLSearchParams();
     body.append(GOOGLE_ENTRY_NAME, name);
     body.append(GOOGLE_ENTRY_PHONE, phone);
     body.append(GOOGLE_ENTRY_QUALIFICATION, qualification || "");
+    body.append(GOOGLE_ENTRY_YEAR, year || "");
 
     fetch(GOOGLE_FORM_ACTION, {
         method: "POST",
@@ -1134,7 +1137,7 @@ function finishQuiz() {
     registerPhone(gameState.playerPhone);
 
     // 3. ─── SUBMIT TO GOOGLE FORM ────────────────────────────────────────
-    submitToGoogleForm(gameState.playerName, gameState.playerPhone, gameState.playerQualification);
+    submitToGoogleForm(gameState.playerName, gameState.playerPhone, gameState.playerQualification, gameState.playerYear);
     // ─────────────────────────────────────────────────────────────────────
 
     // 4. Save latest attempt for Welcome screen display
@@ -1181,13 +1184,17 @@ function returnToWelcomeScreen() {
     const phoneInput = document.getElementById("player-phone");
     if (nameInput) nameInput.value = "";
     if (phoneInput) phoneInput.value = "";
+    const yearInput = document.getElementById("player-year");
+    if (yearInput) yearInput.value = "";
 
     // Clear qualification selection
     document.querySelectorAll(".qual-btn").forEach(b => b.classList.remove("qual-selected"));
     const qualError  = document.getElementById("qual-error");
     const phoneError = document.getElementById("phone-error");
+    const yearError  = document.getElementById("year-error");
     if (qualError)  qualError.style.display  = "none";
     if (phoneError) phoneError.style.display = "none";
+    if (yearError)  yearError.style.display  = "none";
 
     // Reset game state
     gameState.currentQuestionIndex = 0;
@@ -1197,6 +1204,8 @@ function returnToWelcomeScreen() {
     gameState.playerName = "";
     gameState.playerPhone = "";
     gameState.playerQualification = "";
+    gameState.playerYear = "";
+    updateRegistrationProgress();
 }
 
 function updateRecentAttemptDisplay(name, phone, score) {
@@ -1230,6 +1239,40 @@ function updateRecentAttemptDisplay(name, phone, score) {
     }
 }
 
+// 7b. REGISTRATION FORM FEEDBACK
+// Same rules the submit handler enforces, so the bar only fills for valid details.
+function updateRegistrationProgress() {
+    const checks = [
+        { id: "player-name",  ok: (v) => v.length > 0 },
+        { id: "player-phone", ok: (v) => /^[0-9]{10}$/.test(v) },
+        { id: "player-year",  ok: (v) => /^[0-9]{4}$/.test(v) }
+    ];
+
+    let done = 0;
+    checks.forEach(({ id, ok }) => {
+        const input = document.getElementById(id);
+        if (!input) return;
+        const valid = ok(input.value.trim());
+        input.closest(".field").classList.toggle("is-valid", valid);
+        if (valid) done++;
+    });
+    if (gameState.playerQualification) done++;
+
+    const total = checks.length + 1;
+    const fill = document.getElementById("reg-progress-fill");
+    const count = document.getElementById("reg-progress-count");
+    if (fill) fill.style.width = `${(done / total) * 100}%`;
+    if (count) count.textContent = `${done} / ${total}`;
+}
+
+function shakeRegistrationForm() {
+    const form = document.getElementById("start-form");
+    if (!form) return;
+    form.classList.remove("shake");
+    void form.offsetWidth; // restart the animation if it is already running
+    form.classList.add("shake");
+}
+
 // 8. INITIALIZE DOM BINDINGS
 document.addEventListener("DOMContentLoaded", () => {
     initStarfield();
@@ -1250,12 +1293,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Live progress + validity feedback for the registration fields
+    ["player-name", "player-phone", "player-year"].forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.addEventListener("input", updateRegistrationProgress);
+    });
+    updateRegistrationProgress();
+
     // Qualification button selection
     document.querySelectorAll(".qual-btn").forEach((btn) => {
         btn.addEventListener("click", () => {
             document.querySelectorAll(".qual-btn").forEach(b => b.classList.remove("qual-selected"));
             btn.classList.add("qual-selected");
             gameState.playerQualification = btn.getAttribute("data-val");
+            updateRegistrationProgress();
             const qualError = document.getElementById("qual-error");
             if (qualError) qualError.style.display = "none";
         });
@@ -1269,6 +1320,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const nameInput  = document.getElementById("player-name");
             const phoneInput = document.getElementById("player-phone");
             const phoneError = document.getElementById("phone-error");
+            const yearInput  = document.getElementById("player-year");
+            const yearError  = document.getElementById("year-error");
             const qualError  = document.getElementById("qual-error");
 
             let hasError = false;
@@ -1295,13 +1348,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 hasError = true;
             }
 
+            // Year of Pass out: exactly 4 digits
+            const year = yearInput ? yearInput.value.trim() : "";
+            if (!/^[0-9]{4}$/.test(year)) {
+                if (yearError) {
+                    yearError.textContent = "Please enter a valid 4-digit year.";
+                    yearError.style.display = "block";
+                }
+                hasError = true;
+            }
+
             const name = nameInput ? nameInput.value.trim() : "";
             if (!name) hasError = true;
 
-            if (hasError) return;
+            if (hasError) {
+                shakeRegistrationForm();
+                return;
+            }
 
             gameState.playerName  = name;
             gameState.playerPhone = phone;
+            gameState.playerYear  = year;
 
             // Pick 1 random question from the shuffled pool
             const allQuestions = [...QUIZ_QUESTIONS];
