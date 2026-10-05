@@ -657,6 +657,56 @@ function shuffleArray(array) {
     }
 }
 
+// 1b. QUESTION DECK
+// Every question is asked once per cycle, in shuffled order. The rest of the
+// current cycle is saved in this browser, so nobody repeats a question until
+// the whole cycle has been asked.
+const QUESTION_DECK_KEY = "quantum_quiz_question_deck";
+
+function loadQuestionState() {
+    try {
+        const saved = JSON.parse(localStorage.getItem(QUESTION_DECK_KEY));
+        const isValid = (i) => Number.isInteger(i) && i >= 0 && i < QUIZ_QUESTIONS.length;
+        if (saved && Array.isArray(saved.remaining)) {
+            return {
+                remaining: saved.remaining.filter(isValid),
+                last: isValid(saved.last) ? saved.last : null
+            };
+        }
+    } catch (e) {
+        // Unreadable storage: start a new cycle
+    }
+    return { remaining: [], last: null };
+}
+
+function saveQuestionState(state) {
+    try {
+        localStorage.setItem(QUESTION_DECK_KEY, JSON.stringify(state));
+    } catch (e) {
+        // Storage unavailable: the deck still works for this visit
+    }
+}
+
+function drawQuestion() {
+    const state = loadQuestionState();
+
+    if (state.remaining.length === 0) {
+        // Start a new shuffled cycle with every question
+        state.remaining = QUIZ_QUESTIONS.map((_, i) => i);
+        shuffleArray(state.remaining);
+
+        // Avoid asking the question that was just asked at the start of the new cycle
+        if (state.remaining.length > 1 && state.remaining[0] === state.last) {
+            [state.remaining[0], state.remaining[1]] = [state.remaining[1], state.remaining[0]];
+        }
+    }
+
+    const idx = state.remaining.shift();
+    state.last = idx;
+    saveQuestionState(state);
+    return QUIZ_QUESTIONS[idx];
+}
+
 // 2. STATE MANAGER
 const gameState = {
     playerName: "",
@@ -1213,26 +1263,23 @@ function updateRecentAttemptDisplay(name, phone, score) {
     const nameText = document.getElementById("recent-player-name");
     const phoneText = document.getElementById("recent-player-phone");
     const badge = document.getElementById("recent-player-badge");
+    const initials = document.getElementById("recent-player-initials");
 
     if (!container) return;
 
     if (name) {
+        const isWinner = score === 1;
         if (nameText) nameText.textContent = name;
         if (phoneText) phoneText.textContent = `📞 ${phone}`;
-
-        if (badge) {
-            if (score === 1) {
-                badge.textContent = "WELL DONE WINNER";
-                badge.style.background = "rgba(16, 185, 129, 0.12)";
-                badge.style.border = "1px solid rgba(16, 185, 129, 0.25)";
-                badge.style.color = "var(--success)";
-            } else {
-                badge.textContent = "BETTER LUCK NEXT TIME";
-                badge.style.background = "rgba(239, 68, 68, 0.12)";
-                badge.style.border = "1px solid rgba(239, 68, 68, 0.25)";
-                badge.style.color = "var(--error)";
-            }
+        if (initials) {
+            initials.textContent = name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join("").toUpperCase();
         }
+        if (badge) badge.textContent = isWinner ? "WELL DONE WINNER" : "BETTER LUCK NEXT TIME";
+
+        // Colours come from CSS via this class; hiding and re-showing restarts the entrance animation
+        container.classList.toggle("is-winner", isWinner);
+        container.style.display = "none";
+        void container.offsetWidth;
         container.style.display = "block";
     } else {
         container.style.display = "none";
@@ -1370,10 +1417,8 @@ document.addEventListener("DOMContentLoaded", () => {
             gameState.playerPhone = phone;
             gameState.playerYear  = year;
 
-            // Pick 1 random question from the shuffled pool
-            const allQuestions = [...QUIZ_QUESTIONS];
-            shuffleArray(allQuestions);
-            gameState.activeQuestions = [allQuestions[0]];
+            // Next question from the current cycle; repeats only after every question has been asked
+            gameState.activeQuestions = [drawQuestion()];
             gameState.currentQuestionIndex = 0;
             gameState.score = 0;
 
